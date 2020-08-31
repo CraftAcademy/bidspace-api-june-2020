@@ -7,19 +7,20 @@ RSpec.describe "GET /api/v1/listings", type: :request do
     end 
 
   it 'respond with 200 status' do
-    expect(response_json).to have_http_status 200
+    expect(response).to have_http_status 200
   end
 
   it 'shows listing height' do
-    expect(response_json['listing']['height']).to eq 4
+    binding.pry
+    expect(response_json['height']).to eq 4
   end
 
   it 'shows listing description' do
-    expect(response_json['listing']['description']).to eq "This is the best place to park your car"
+    expect(response_json['description']).to eq "This is the best place to park your car"
   end
 
   it 'shows listing price'do
-    expect(response_json['listing']['price']).to eq 200
+    expect(response_json['price']).to eq 200
   end
   end
 end
