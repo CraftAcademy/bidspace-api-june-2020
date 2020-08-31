@@ -17,11 +17,8 @@ ActiveRecord::Schema.define(version: 2020_08_31_121034) do
 
   create_table "listings", force: :cascade do |t|
     t.string "category"
-    t.text "description"
+    t.text "lead"
     t.string "scene"
-    t.integer "height"
-    t.string "address"
-    t.integer "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

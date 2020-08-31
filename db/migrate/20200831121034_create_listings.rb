@@ -2,11 +2,8 @@ class CreateListings < ActiveRecord::Migration[6.0]
   def change
     create_table :listings do |t|
       t.string :category
-      t.text :description
+      t.text :lead
       t.string :scene
-      t.integer :height
-      t.string :address
-      t.integer :price
 
       t.timestamps
     end

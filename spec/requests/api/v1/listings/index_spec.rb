@@ -1,6 +1,6 @@
 RSpec.describe 'GET /api/v1/listings', type: :request do
   describe 'successfully get listings' do
-    let!(:listing) { 3.times {create(:listing, category: 'car park', description: 'Wide space with safe area', scene: 'indoor', height: 4, address: 'Gothenburg', price: 200)}}
+    let!(:listing) { 3.times {create(:listing, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor')}}
  
     before do
       get '/api/v1/listings'

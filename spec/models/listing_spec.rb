@@ -8,10 +8,13 @@ RSpec.describe Listing, type: :model do
 
   describe 'Database table' do
     it { is_expected.to have_db_column :category }
-    it { is_expected.to have_db_column :description }
+    it { is_expected.to have_db_column :lead }
     it { is_expected.to have_db_column :scene }
-    it { is_expected.to have_db_column :height }
-    it { is_expected.to have_db_column :address }
-    it { is_expected.to have_db_column :price }
+  end
+
+  describe 'Validations' do
+    it { is_expected.to validate_presence_of :category}
+    it { is_expected.to validate_presence_of :lead }
+    it { is_expected.to validate_presence_of :scene }
   end
 end
