@@ -13,7 +13,15 @@ RSpec.describe 'GET /api/v1/listings', type: :request do
     it 'should return listings' do
     expect(response_json["listings"].count).to eq 3
     end
-  end 
+
+    it 'should return the listing lead' do
+      expect(response_json["listings"].first["lead"]).to eq 'Wide space with safe area'
+    end
+    
+    it 'should return the listing scene' do
+      expect(response_json["listings"].second["scene"]).to eq "indoor"
+    end
+  end
 
   describe 'no listing has been added' do
     before do
