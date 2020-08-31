@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_121034) do
   enable_extension "plpgsql"
 
   create_table "listings", force: :cascade do |t|
-    t.string "type"
+    t.string "category"
     t.text "description"
     t.string "scene"
     t.integer "height"
