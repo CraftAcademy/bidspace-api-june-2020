@@ -1,5 +1,5 @@
 RSpec.describe "GET /api/v1/listings", type: :request do
-  let!(:listing) { FactoryBot.create(:listing, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor', height: 4, description: "This is the best place to park your car", price: 200)}
+  let!(:listing) { FactoryBot.create(:listing, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor', address:'Lövåsvägen 21 16733 Bromma', description: "This is the best place to park your car", price: 200)}
 
   describe 'successfully gets listing' do
     before do 
@@ -10,8 +10,8 @@ RSpec.describe "GET /api/v1/listings", type: :request do
       expect(response).to have_http_status 200
     end
 
-    it 'shows listing height' do
-      expect(response_json['height']).to eq 4
+    it 'shows listing address' do
+      expect(response_json['address']).to eq 'Lövåsvägen 21 16733 Bromma'
     end
 
     it 'shows listing description' do

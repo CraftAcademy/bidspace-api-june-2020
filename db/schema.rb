@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_180145) do
     t.integer "scene"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "height"
+    t.string "address"
     t.text "description"
     t.integer "price"
   end
