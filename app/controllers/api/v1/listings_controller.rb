@@ -6,6 +6,9 @@ class Api::V1::ListingsController < ApplicationController
 
   def show
     listing = Listing.find(params[:id])
+
     render json: listing, serializer: ListingShowSerializer
+  rescue
+    render json: {message: "Unfortunately the listing could not be found"}, status: 422
   end
 end
