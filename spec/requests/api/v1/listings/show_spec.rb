@@ -1,5 +1,5 @@
 RSpec.describe "GET /api/v1/listings", type: :request do
-  let!(:listing) { create(:listing, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor', height: 4, description: "This is the best place to park your car", price: 200)}
+  let!(:listing) { FactoryBot.create(:listing, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor', height: 4, description: "This is the best place to park your car", price: 200)}
 
   describe 'successfully gets listing' do
     before do 
