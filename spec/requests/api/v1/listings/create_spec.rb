@@ -112,7 +112,7 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
       end
 
       it 'is expected to return error message' do
-        expect(response_json['message']).to eq "Invalid address"
+        expect(response_json['message']).to eq 'Invalid address'
       end
     end
   end
