@@ -38,7 +38,7 @@ RSpec.describe "POST /api/v1/listings", type: :request do
 
     it 'listing is expected to have longitude and latitude' do
       listing = Listing.last
-      expect(listing.longitude).to eq 17.953150 
+      expect(listing.longitude).to eq 17.9547406
     end
   end
 end
