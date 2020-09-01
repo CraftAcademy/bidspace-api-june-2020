@@ -19,7 +19,6 @@ class Api::V1::ListingsController < ApplicationController
   def create
     listing = current_user.listings.create(listing_params)
     if listing.persisted? && attach_image(listing)
-      binding.pry
       render json: { message: 'The listing has been created successfully!' }
     else
       render_error_message(listing.errors)
