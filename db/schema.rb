@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_01_085050) do
+ActiveRecord::Schema.define(version: 2020_09_01_093628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2020_09_01_085050) do
     t.integer "price"
     t.float "longitude"
     t.float "latitude"
+    t.bigint "landlord_id"
+    t.index ["landlord_id"], name: "index_listings_on_landlord_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,4 +57,5 @@ ActiveRecord::Schema.define(version: 2020_09_01_085050) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "listings", "users", column: "landlord_id"
 end

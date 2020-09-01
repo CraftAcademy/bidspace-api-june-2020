@@ -13,10 +13,11 @@ class Api::V1::ListingsController < ApplicationController
   end
 
   def create
-    listing = current_user.listings.create(listing_params)
-    # location = Geocoder.search(params[:listing][:address])
-
     binding.pry
+    listing = current_user.listings.create(listing_params)
+    render json: {message: "The listing has been created successfully!"}
+   
+  
   end
 
 

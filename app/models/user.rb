@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :listings, foreign_key: "landlord_id", class_name: "Listing"
+
 end

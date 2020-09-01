@@ -5,4 +5,6 @@ class Listing < ApplicationRecord
   geocoded_by :address
   after_validation :geocode
 
+  belongs_to :landlord, class_name: "User"
+
 end
