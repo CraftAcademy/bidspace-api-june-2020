@@ -1,8 +1,8 @@
 RSpec.describe "POST /api/v1/listings", type: :request do 
 
-  let!(:landlord) { create(:user, role: 'landlord')}
+  let!(:landlord) { create(:user)}
   let!(:landlord_credentials) { landlord.create_new_auth_token }
-  let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json'}}.merge!(landlord_credentials)
+  let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json'}.merge!(landlord_credentials)}
 
   describe 'successfully with valid params and headers' do 
     before do 
