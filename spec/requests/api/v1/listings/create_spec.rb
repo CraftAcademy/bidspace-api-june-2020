@@ -5,6 +5,15 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
   let!(:landlord_credentials) { landlord.create_new_auth_token }
   let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
+  let(:image) {
+    {
+      type: 'application/json',
+      encoder: 'iphone_picture',
+      data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
+      extension: 'jpg'
+    }
+  }
+
   describe 'successfully with valid params and headers' do
     before do
       post '/api/v1/listings',
@@ -15,7 +24,8 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
                scene: 'outdoor',
                address: 'Småbrukets backe 30 14158 Huddinge',
                description: 'This is an outdoor parking but in safe area',
-               price: 150
+               price: 150,
+               image: image
              }
            }, headers: landlord_headers
     end
@@ -40,6 +50,10 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     it 'listing is expected to have longitude and latitude' do
       listing = Listing.last
       expect(listing.longitude).to eq 17.9547406
+    end
+
+    it 'listing is expected to have image attached' do
+      expect(Listing.last.image.attached?).to eq true
     end
   end
 

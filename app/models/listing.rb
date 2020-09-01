@@ -2,6 +2,8 @@ class Listing < ApplicationRecord
   validates_presence_of :category, :lead, :scene, :address, :description, :price
   enum scene: [:indoor, :outdoor]
 
+  has_many_attached :image
+
   geocoded_by :address
   
   belongs_to :landlord, class_name: "User"
