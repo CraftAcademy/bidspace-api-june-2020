@@ -6,5 +6,6 @@ FactoryBot.define do
     description { 'Gated park with night lamp' }
     price { 200 }
     address {'Lövåsvägen 21 16733 Bromma'}
+    association :landlord, factory: :user
   end
 end
