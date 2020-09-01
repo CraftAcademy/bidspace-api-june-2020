@@ -12,7 +12,7 @@ class Api::V1::ListingsController < ApplicationController
     listing = Listing.find(params[:id])
 
     render json: listing, serializer: ListingShowSerializer
-  rescue
+  rescue StandardError
     render json: { message: 'Unfortunately the listing could not be found' }, status: 422
   end
 
@@ -23,8 +23,8 @@ class Api::V1::ListingsController < ApplicationController
     else
       render_error_message(listing.errors)
     end
-  rescue => error_message
-    render json: { message: error_message }, status: 422
+  rescue StandardError => e
+    render json: { message: e }, status: 422
   end
 
   private
