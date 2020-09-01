@@ -11,4 +11,18 @@ class Api::V1::ListingsController < ApplicationController
   rescue
     render json: {message: "Unfortunately the listing could not be found"}, status: 422
   end
+
+  def create
+    listing = current_user.listings.create(listing_params)
+    # location = Geocoder.search(params[:listing][:address])
+
+    binding.pry
+  end
+
+
+  private 
+
+  def listing_params
+    params.require(:listing).permit(:category, :lead, :scene, :description, :price, :address)
+  end
 end
