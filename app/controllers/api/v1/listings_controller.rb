@@ -18,7 +18,7 @@ class Api::V1::ListingsController < ApplicationController
 
   def create
     listing = current_user.listings.create(listing_params)
-    if listing.persisted?
+    if listing.persisted? && attach_image(listing)
       render json: { message: 'The listing has been created successfully!' }
     else
       render_error_message(listing.errors)
@@ -28,6 +28,13 @@ class Api::V1::ListingsController < ApplicationController
   end
 
   private
+  
+  def attach_image(listing)
+    params_image = params[:listing][:image]
+    if params_image.present?
+      DecodeService.attach_image(params_image, listing.image)
+    end
+  end
 
   def listing_params
     params.require(:listing).permit(:category, :lead, :scene, :description, :price, :address)
