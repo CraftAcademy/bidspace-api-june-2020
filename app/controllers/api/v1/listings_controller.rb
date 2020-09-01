@@ -1,4 +1,5 @@
 class Api::V1::ListingsController < ApplicationController
+  
   def index
    listings = Listing.all  
    render json: {listings: listings}, each_serializer: ListingIndexSerializer
@@ -15,8 +16,6 @@ class Api::V1::ListingsController < ApplicationController
   def create
     listing = current_user.listings.create(listing_params)
     render json: {message: "The listing has been created successfully!"}
-   
-  
   end
 
 
