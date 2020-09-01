@@ -12,19 +12,19 @@ class Api::V1::ListingsController < ApplicationController
     listing = Listing.find(params[:id])
 
     render json: listing, serializer: ListingShowSerializer
-  rescue StandardError
+  rescue
     render json: { message: 'Unfortunately the listing could not be found' }, status: 422
   end
 
   def create
     listing = current_user.listings.create(listing_params)
     if listing.persisted?
-      # binding.pry
       render json: { message: 'The listing has been created successfully!' }
     else
-      # binding.pry
       render_error_message(listing.errors)
     end
+  rescue => error_message
+    render json: { message: error_message }, status: 422
   end
 
   private
