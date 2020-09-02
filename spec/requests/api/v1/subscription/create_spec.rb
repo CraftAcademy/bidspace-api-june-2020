@@ -19,7 +19,6 @@ RSpec.describe "POST /v1/subscriptions", type: :request do
     )
   end
 
-
   let(:user) { create(:user, role: 'registered')}
   let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPTS: "application/json" }.merge!(credentials) }
