@@ -5,22 +5,21 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
   let!(:landlord_credentials) { landlord.create_new_auth_token }
   let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
-  let(:image) {
-    { 
-      type: 'application/json',
-      encoder: 'iphone_picture',
-      data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
-      extension: 'jpg'
-    }
-  }
-
-  let(:image) {
-    { 
-      type: 'application/json',
-      encoder: 'iphone_picture',
-      data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
-      extension: 'jpg'
-    }
+  let(:images) {
+    [
+      { 
+        type: 'application/json',
+        encoder: 'iphone_picture',
+        data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
+        extension: 'jpg'
+      },
+      { 
+        type: 'application/json',
+        encoder: 'parking_picture',
+        data: 'DfhgxhsxsvttfusxSDDDJhcdcdc',
+        extension: 'jpg'
+      }
+    ]
   }
 
   describe 'successfully with valid params and headers' do
@@ -34,7 +33,7 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
                address: 'Småbrukets backe 30 14158 Huddinge',
                description: 'This is an outdoor parking but in safe area',
                price: 150,
-               image: image
+               images: images
              }
            }, headers: landlord_headers
     end
@@ -66,7 +65,6 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     end
 
     it 'listing is expected to have multiple images' do
-      binding.pry
       expect(Listing.last.image.count).to eq 2
       
     end
@@ -83,7 +81,8 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
                  scene: 'outdoor',
                  address: 'Småbrukets backe 30 14158 Huddinge',
                  description: 'This is an outdoor parking but in safe area',
-                 price: 150
+                 price: 150,
+                 images: images
                }
              }
       end
@@ -107,7 +106,8 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
                  scene: 'outdoor',
                  address: '',
                  description: 'This is an outdoor parking but in safe area',
-                 price: 150
+                 price: 150,
+                 images: images
                }
              }, headers: landlord_headers
       end
@@ -120,6 +120,30 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
         expect(response_json['message']).to eq "Category can't be blank, Lead can't be blank, and Address can't be blank"
       end
     end
+
+    describe 'with no images' do
+      before do
+        post '/api/v1/listings',
+             params: {
+               listing: {
+                 category: 'car park',
+                 lead: 'Too good to park',
+                 scene: 'outdoor',
+                 address: 'Småbrukets backe 30 14158 Huddinge',
+                 description: 'This is an outdoor parking but in safe area',
+                 price: 150,
+               }
+             }, headers: landlord_headers
+      end
+  
+      it 'is expected to return 422 response status' do 
+        expect(response).to have_http_status 422
+      end
+
+      it 'is expected to return error message' do
+        expect(response_json['message']).to eq "The image can't be blank"
+      end
+    end 
 
     describe 'invalid address' do
       before do
