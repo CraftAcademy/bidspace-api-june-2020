@@ -40,5 +40,94 @@ RSpec.describe "POST /v1/subscriptions", type: :request do
     it 'is expected to return success message' do
       expect(response_json["message"]).to eq "Transaction was successful"
     end
+
+    it 'is expected to change user role to subscriber' do
+      user.reload
+      expect(user.role).to eq 'subscriber'
+    end
+  end
+
+  describe 'unsuccessfully when' do
+    describe "with invalid parameters" do
+      before do
+        post "/api/v1/subscriptions", headers: headers
+      end
+
+      it "returns error message" do
+        expect(response_json["message"]).to eq "Something went wrong. There was no token provided..."
+      end
+
+      it "returns error http code" do
+        expect(response).to have_http_status 422
+      end
+
+      it "does NOT set user role to subsciber" do
+        user.reload
+        expect(user.role).not_to eq 'subscriber'
+      end
+    end
+
+    describe "stripeToken is empty" do
+      before do
+        post "/api/v1/subscriptions",
+             params: { stripeToken: "" }, headers: headers
+      end
+
+      it "returns a error http code" do
+        expect(response).to have_http_status 422
+      end
+
+      it "does NOT set user role to subsciber" do
+        user.reload
+        expect(user.role).not_to eq 'subscriber'
+      end
+
+      it "returns an error message" do
+        expect(response_json["message"]).to eq "Something went wrong. There was no token provided..."
+      end
+    end
+
+    describe "credit card is declined" do
+      before do
+        StripeMock.prepare_card_error(:card_declined, :new_invoice)
+
+        post "/api/v1/subscriptions",
+          params: { stripeToken: valid_token 
+          }, headers: headers
+      end
+
+      it "returns a error http code" do
+        expect(response).to have_http_status 422
+      end
+
+      it "does NOT set user role to subsciber" do
+        user.reload
+        expect(user.role).not_to eq 'subscriber'
+      end
+
+      it "returns an error message" do
+        expect(response_json["message"]).to eq "Something went wrong. The card was declined"
+      end
+    end
+
+    describe "user is already subscriber" do
+      let(:subscriber) { create(:user, role: :subscriber) }
+      let(:subscriber_credentials) { subscriber.create_new_auth_token }
+      let(:subscriber_headers) { { HTTP_ACCEPT: "application/json" }.merge!(subscriber_credentials) }
+
+      before do
+        post "/api/v1/subscriptions",
+          params: { stripeToken: valid_token 
+          }, headers: subscriber_headers
+      end
+
+      it "returns a error http code" do
+        expect(response).to have_http_status 422
+      end
+
+      it "returns an error message" do
+        expect(response_json["message"]).to eq "Something went wrong. You are already a subscriber"
+      end
+    end
   end
 end
