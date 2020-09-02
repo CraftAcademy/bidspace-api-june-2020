@@ -66,7 +66,6 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
 
     it 'listing is expected to have multiple images' do
       expect(Listing.last.image.count).to eq 2
-      
     end
   end
 

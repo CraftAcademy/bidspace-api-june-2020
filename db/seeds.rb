@@ -9,7 +9,7 @@ free_listing_1 = Listing.create(
   lead: 'Takes less than 1 minute to get the metro',
   scene: 'outdoor',
   description: 'Curabitur aliquet quam id dui posuere blandit.' * 3,
-  address: 'Björcksgatan 37 B416 52 Göteborg'
+  address: 'Björcksgatan 37B 41652 Göteborg'
   price: '50'
   landlord_id: landlord.id
 )
@@ -21,7 +21,7 @@ free_listing_1 = Listing.create(
   lead: 'Safe area and easy access',
   scene: 'outdoor',
   description: 'Proin eget tortor risus. Curabitur aliquet quam id dui posuere blandit.' * 3,
-  address: 'Högbergsgatan 21116 20 Stockholm'
+  address: 'Högbergsgatan 21 11620 Stockholm'
   price: '80'
   landlord_id: landlord.id
 )
@@ -33,7 +33,7 @@ free_listing_3 = Listing.create(
   lead: 'Close to the city center',
   scene: 'outdoor',
   description: 'Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.' * 3,
-  address: 'Settergatan 14115 48 Stockholm'
+  address: 'Settergatan 14 11548 Stockholm'
   price: '100'
   landlord_id: landlord.id
 )

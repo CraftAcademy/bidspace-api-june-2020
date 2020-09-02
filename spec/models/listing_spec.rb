@@ -13,7 +13,6 @@ RSpec.describe Listing, type: :model do
     it { is_expected.to have_db_column :address }
     it { is_expected.to have_db_column :description }
     it { is_expected.to have_db_column :price }
-
   end
 
   describe 'Validations' do
