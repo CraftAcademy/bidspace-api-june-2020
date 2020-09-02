@@ -13,6 +13,7 @@ gem 'active_model_serializers'
 gem 'devise_token_auth'
 gem 'geocoder'
 gem 'aws-sdk-s3'
+gem 'stripe-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -22,6 +23,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'coveralls',  require:  false
+   gem 'stripe-ruby-mock', '3.0.0'
 end
 
 group :development do
