@@ -20,7 +20,10 @@ class Api::V1::ListingsController < ApplicationController
     listing = current_user.listings.create(listing_params)
     if listing.persisted? && attach_image(listing)
       render json: { message: 'The listing has been created successfully!' }
-    else
+    elsif !attach_image(listing)
+      listing.destroy
+      render json: { message: "The image can't be blank"}, status:422
+    else 
       render_error_message(listing.errors)
     end
   rescue StandardError => e
@@ -30,9 +33,13 @@ class Api::V1::ListingsController < ApplicationController
   private
   
   def attach_image(listing)
-    params_image = params[:listing][:image]
-    if params_image.present?
-      DecodeService.attach_image(params_image, listing.image)
+    
+    params_images = params[:listing][:images]
+    if params_images.present?
+      params_images.each do |image| 
+        DecodeService.attach_image(image, listing.image) 
+      end
+      
     end
   end
 
