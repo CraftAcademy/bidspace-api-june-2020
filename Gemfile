@@ -23,7 +23,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'coveralls',  require:  false
-   gem 'stripe-ruby-mock', '3.0.0'
+  gem 'stripe-ruby-mock', '3.0.0'
 end
 
 group :development do
