@@ -38,7 +38,7 @@ RSpec.describe "POST /v1/subscriptions", type: :request do
     end
 
     it 'is expected to return success message' do
-      expect(response_json["message"]).to eq "Transaction was successfull"
+      expect(response_json["message"]).to eq "Transaction was successful"
     end
   end
 end
