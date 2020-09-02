@@ -9,7 +9,7 @@ RSpec.describe "POST /v1/subscriptions", type: :request do
   let(:product) { stripe_helper.create_product }
   let!(:plan) do
     stripe_helper.create_plan(
-      id: "bs_subscription_plan",
+      id: "bds_subscription_plan",
       amount: 100,
       currency: "usd",
       interval: "month",
@@ -20,7 +20,7 @@ RSpec.describe "POST /v1/subscriptions", type: :request do
   end
 
 
-  let(:user) { create(:user)}
+  let(:user) { create(:user, role: 'registered')}
   let(:credentials) { user.create_new_auth_token }
   let(:headers) { { HTTP_ACCEPTS: "application/json" }.merge!(credentials) }
 

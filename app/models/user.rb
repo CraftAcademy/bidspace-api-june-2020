@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
 
   has_many :listings, foreign_key: "landlord_id", class_name: "Listing"
 
+  enum role: [:registered, :subscriber]
 end
