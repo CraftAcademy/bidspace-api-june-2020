@@ -6,7 +6,16 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
   let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
   let(:image) {
-    {
+    { 
+      type: 'application/json',
+      encoder: 'iphone_picture',
+      data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
+      extension: 'jpg'
+    }
+  }
+
+  let(:image) {
+    { 
       type: 'application/json',
       encoder: 'iphone_picture',
       data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
@@ -54,6 +63,12 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
 
     it 'listing is expected to have image attached' do
       expect(Listing.last.image.attached?).to eq true
+    end
+
+    it 'listing is expected to have multiple images' do
+      binding.pry
+      expect(Listing.last.image.count).to eq 2
+      
     end
   end
 
