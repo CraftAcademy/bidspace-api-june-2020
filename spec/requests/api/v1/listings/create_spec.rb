@@ -5,22 +5,22 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
   let!(:landlord_credentials) { landlord.create_new_auth_token }
   let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
-  let(:images) {
+  let(:images) do
     [
-      { 
+      {
         type: 'application/json',
         encoder: 'iphone_picture',
         data: 'AEwughvcvjdkshdhdcdcgWEgvcdhhd',
         extension: 'jpg'
       },
-      { 
+      {
         type: 'application/json',
         encoder: 'parking_picture',
         data: 'DfhgxhsxsvttfusxSDDDJhcdcdc',
         extension: 'jpg'
       }
     ]
-  }
+  end
 
   describe 'successfully with valid params and headers' do
     before do
@@ -61,11 +61,11 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     end
 
     it 'listing is expected to have image attached' do
-      expect(Listing.last.image.attached?).to eq true
+      expect(Listing.last.images.attached?).to eq true
     end
 
     it 'listing is expected to have multiple images' do
-      expect(Listing.last.image.count).to eq 2
+      expect(Listing.last.images.count).to eq 2
     end
   end
 
@@ -130,19 +130,19 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
                  scene: 'outdoor',
                  address: 'Småbrukets backe 30 14158 Huddinge',
                  description: 'This is an outdoor parking but in safe area',
-                 price: 150,
+                 price: 150
                }
              }, headers: landlord_headers
       end
-  
-      it 'is expected to return 422 response status' do 
+
+      it 'is expected to return 422 response status' do
         expect(response).to have_http_status 422
       end
 
       it 'is expected to return error message' do
         expect(response_json['message']).to eq "The image can't be blank"
       end
-    end 
+    end
 
     describe 'invalid address' do
       before do

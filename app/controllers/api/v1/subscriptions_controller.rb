@@ -1,30 +1,30 @@
+# frozen_string_literal: true
+
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_subscriber?
   before_action :check_stripe_token
-  
+
   def create
-    begin
-      customer_id = get_customer(params[:stripeToken])
+    customer_id = get_customer(params[:stripeToken])
 
-      subscription = Stripe::Subscription.create({ 
-        customer: customer_id, 
-        plan: 'bds_subscription_plan' 
-      })
+    subscription = Stripe::Subscription.create({
+                                                 customer: customer_id,
+                                                 plan: 'bds_subscription_plan'
+                                               })
 
-      test_env?(customer_id, subscription)
+    test_env?(customer_id, subscription)
 
-      status = Stripe::Invoice.retrieve(subscription.latest_invoice).paid
+    status = Stripe::Invoice.retrieve(subscription.latest_invoice).paid
 
-      if status
-        current_user.update_attribute(:role, 'subscriber')
-        render json: {message: 'Transaction was successful'}
-      else
-        render_stripe_error('Transaction was unsuccessful')
-      end
-    rescue => error
-      render_stripe_error(error.message)
-    end 
+    if status
+      current_user.update_attribute(:role, 'subscriber')
+      render json: { message: 'Transaction was successful' }
+    else
+      render_stripe_error('Transaction was unsuccessful')
+    end
+  rescue StandardError => e
+    render_stripe_error(e.message)
   end
 
   private
@@ -48,9 +48,9 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def check_stripe_token
-    if !params[:stripeToken] or params[:stripeToken].empty?
+    if !params[:stripeToken] || params[:stripeToken].empty?
       render_stripe_error('There was no token provided...')
-      return
+      nil
     end
   end
 
