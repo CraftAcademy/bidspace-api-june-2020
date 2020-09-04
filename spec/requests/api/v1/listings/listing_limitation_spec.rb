@@ -88,7 +88,7 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     end
   end
 
-  describe 'subscriber can successfully create more then two listings' do
+  describe 'subscriber can successfully create more than two listings' do
     let(:landlord) { create(:user, role: 'subscriber') }
     let(:landlord_credentials) { landlord.create_new_auth_token }
     let(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
