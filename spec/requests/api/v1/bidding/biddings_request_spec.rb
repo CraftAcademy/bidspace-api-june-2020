@@ -7,14 +7,13 @@ RSpec.describe "Biddings", type: :request do
     let!(:user_credentials) { user.create_new_auth_token }
     let!(:user_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(user_credentials) }
 
-    let!(:bidding){ create(:bidding, bid: 200)}
     let!(:listing) { create(:listing, :with_images, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor', price: 250) } 
 
     before do
       post '/api/v1/biddings',
            params: {
              bidding: {
-             bid: 200
+             bid: 200,
              listing: listing.id
              }
            }, headers: user_headers
