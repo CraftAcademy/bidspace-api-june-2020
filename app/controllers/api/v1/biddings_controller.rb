@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 class Api::V1::BiddingsController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
   def create
-    # listing = Listing.where(params[:listing_id])
     bidding = current_user.biddings.create(bidding_params)
+    if bidding.persisted?
     render json: { message: 'Your bid was successfully sent' }
+    else
+      render_error_message(bidding.errors)
+    end
   end
 
   private
