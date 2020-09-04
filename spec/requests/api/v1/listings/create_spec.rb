@@ -61,11 +61,11 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     end
 
     it 'listing is expected to have image attached' do
-      expect(Listing.last.image.attached?).to eq true
+      expect(Listing.last.images.attached?).to eq true
     end
 
     it 'listing is expected to have multiple images' do
-      expect(Listing.last.image.count).to eq 2
+      expect(Listing.last.images.count).to eq 2
     end
   end
 

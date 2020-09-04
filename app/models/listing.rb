@@ -2,7 +2,7 @@ class Listing < ApplicationRecord
   validates_presence_of :category, :lead, :scene, :address, :description, :price
   enum scene: [:indoor, :outdoor]
 
-  has_many_attached :image
+  has_many_attached :images
 
   geocoded_by :address
   

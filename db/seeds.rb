@@ -14,7 +14,7 @@ free_listing_1 = Listing.create(
   landlord_id: user.id
 )
 file = URI.open('https://www.quickanddirtytips.com/sites/default/files/images/12186/Parking-Lot-of-deas.jpg')
-free_listing_1.image.attach(io: file, filename: 'first.jpg')
+free_listing_1.images.attach(io: file, filename: 'first.jpg')
 
 free_listing_2 = Listing.create(
   category: 'Parking spot',
@@ -26,7 +26,7 @@ free_listing_2 = Listing.create(
   landlord_id: user.id
 )
 file = URI.open('https://www.pymnts.com/wp-content/uploads/2018/03/parkingspot.jpg')
-free_listing_2.image.attach(io: file, filename: 'second.jpg')
+free_listing_2.images.attach(io: file, filename: 'second.jpg')
 
 free_listing_3 = Listing.create(
   category: 'Parking spot',
@@ -38,4 +38,4 @@ free_listing_3 = Listing.create(
   landlord_id: user.id
 )
 file = URI.open('https://parkeasier.com/wp-content/uploads/2014/12/Homepage_Find_a_Spot_section2.jpg')
-free_listing_3.image.attach(io: file, filename: 'third.jpg')
+free_listing_3.images.attach(io: file, filename: 'third.jpg')

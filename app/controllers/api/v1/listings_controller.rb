@@ -5,7 +5,7 @@ class Api::V1::ListingsController < ApplicationController
 
   def index
     listings = Listing.all
-    render json: { listings: listings }, each_serializer: ListingIndexSerializer
+    render json: listings, each_serializer: ListingIndexSerializer
   end
 
   def show
@@ -37,7 +37,7 @@ class Api::V1::ListingsController < ApplicationController
     params_images = params[:listing][:images]
     if params_images.present?
       params_images.each do |image|
-        DecodeService.attach_image(image, listing.image)
+        DecodeService.attach_image(image, listing.images)
       end
 
     end
