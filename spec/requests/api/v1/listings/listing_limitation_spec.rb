@@ -45,10 +45,10 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     end
 
     it 'is expect to return error message when creating third listing' do
-      expect(response_json['message']).to eq 'Subscribe to create more listing.'
+      expect(response_json['message']).to eq 'Subscribe to create more listings.'
     end
 
-    it 'is expected to have six listings created' do
+    it 'is expected to have two listings created' do
       expect(Listing.all.count).to eq 2
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
       post '/api/v1/listings',
            params: {
              listing: {
-               category: 'From Params',
+               category: 'Car park',
                lead: 'Too good to park',
                scene: 'outdoor',
                description: 'This is an outdoor parking but in safe area',

@@ -22,7 +22,7 @@ class Listing < ApplicationRecord
   def check_if_user_is_subscriber
     user = User.find(landlord_id)
     if user.registered? and user.listings.count == 2
-      raise StandardError.new "Subscribe to create more listing."
+      raise StandardError.new "Subscribe to create more listings."
     end
   end
 end

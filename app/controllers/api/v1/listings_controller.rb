@@ -27,7 +27,6 @@ class Api::V1::ListingsController < ApplicationController
       render_error_message(listing.errors)
     end
   rescue StandardError => e
-
     render json: { message: e }, status: 422
   end
 
@@ -39,7 +38,6 @@ class Api::V1::ListingsController < ApplicationController
       params_images.each do |image|
         DecodeService.attach_image(image, listing.images)
       end
-
     end
   end
 
