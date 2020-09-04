@@ -24,7 +24,7 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
     let!(:listing) { 2.times { create(:listing, landlord: landlord) } }
-  
+
     before do
       post '/api/v1/listings',
            params: {
@@ -58,8 +58,8 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
     let!(:landlord_credentials) { landlord.create_new_auth_token }
     let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
-    let!(:listing) { create(:listing, landlord: landlord) } 
-  
+    let!(:listing) { create(:listing, landlord: landlord) }
+
     before do
       post '/api/v1/listings',
            params: {
@@ -87,7 +87,6 @@ RSpec.describe 'POST /api/v1/listings', type: :request do
       expect(Listing.all.count).to eq 2
     end
   end
-
 
   describe 'subscriber can successfully create more then two listings' do
     let(:landlord) { create(:user, role: 'subscriber') }

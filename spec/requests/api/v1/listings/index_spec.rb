@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RSpec.describe 'GET /api/v1/listings', type: :request do
   describe 'successfully get listings' do
-    let!(:listing) { 3.times {create(:listing, :with_images, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor')}}
+    let!(:listing) { 3.times { create(:listing, :with_images, category: 'car park', lead: 'Wide space with safe area', scene: 'indoor') } }
 
     before do
       get '/api/v1/listings'
@@ -11,15 +13,15 @@ RSpec.describe 'GET /api/v1/listings', type: :request do
     end
 
     it 'should return listings' do
-      expect(response_json["listings"].count).to eq 3
+      expect(response_json['listings'].count).to eq 3
     end
 
     it 'should return the listing lead' do
-      expect(response_json["listings"].first["lead"]).to eq 'Wide space with safe area'
+      expect(response_json['listings'].first['lead']).to eq 'Wide space with safe area'
     end
-    
+
     it 'should return the listing scene' do
-      expect(response_json["listings"].second["scene"]).to eq "indoor"
+      expect(response_json['listings'].second['scene']).to eq 'indoor'
     end
   end
 
@@ -29,7 +31,7 @@ RSpec.describe 'GET /api/v1/listings', type: :request do
     end
 
     it 'should have no articles on page' do
-      expect(response_json["listings"]).to eq []
+      expect(response_json['listings']).to eq []
     end
   end
 end
