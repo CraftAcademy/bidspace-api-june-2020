@@ -3,6 +3,7 @@ class Listing < ApplicationRecord
   enum scene: [:indoor, :outdoor]
 
   has_many_attached :images
+  has_many :biddings
 
   geocoded_by :address
   
