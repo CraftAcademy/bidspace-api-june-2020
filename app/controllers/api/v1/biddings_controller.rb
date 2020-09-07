@@ -5,7 +5,7 @@ class Api::V1::BiddingsController < ApplicationController
   def create
     bidding = current_user.biddings.create(bidding_params)
     if bidding.persisted?
-    render json: { message: 'Your bid was successfully sent' }
+      render json: { message: 'Your bid was successfully sent' }
     else
       render_error_message(bidding.errors)
     end
