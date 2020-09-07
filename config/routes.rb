@@ -6,6 +6,10 @@ Rails.application.routes.draw do
       resources  :listings, only: [:index, :show, :create], constraints: {format: 'json'}
       resources :subscriptions, only: [:create], constraints: {format: 'json'}
       resources :biddings, only: [:create]
+
+      namespace :account do
+        resources :listings, only: [:index], constraints: {format: 'json'}
+      end
     end
   end  
 end
