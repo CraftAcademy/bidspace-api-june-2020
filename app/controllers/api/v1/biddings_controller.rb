@@ -9,6 +9,8 @@ class Api::V1::BiddingsController < ApplicationController
     else
       render_error_message(bidding.errors)
     end
+  rescue StandardError => e
+    render json: { message: e }, status: 401
   end
 
   private

@@ -8,6 +8,7 @@ RSpec.describe 'Biddings', type: :request do
   let!(:user_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(user_credentials) }
 
   let!(:listing) { create(:listing) }
+
   describe 'POST /api/v1/biddings' do
     before do
       post '/api/v1/biddings',
@@ -33,7 +34,7 @@ RSpec.describe 'Biddings', type: :request do
       post '/api/v1/biddings',
            params: {
              bidding: {
-               bid: "",
+               bid: '',
                listing_id: listing.id
              }
            }, headers: user_headers
@@ -51,7 +52,7 @@ RSpec.describe 'Biddings', type: :request do
       post '/api/v1/biddings',
            params: {
              bidding: {
-               bid: "hej",
+               bid: 'hej',
                listing_id: listing.id
              }
            }, headers: user_headers
@@ -69,7 +70,7 @@ RSpec.describe 'Biddings', type: :request do
       post '/api/v1/biddings',
            params: {
              bidding: {
-               bid: "200",
+               bid: '200',
                listing_id: listing.id
              }
            }
@@ -83,6 +84,10 @@ RSpec.describe 'Biddings', type: :request do
   end
 
   describe 'User can not bid on their own listing' do
+    let(:landlord) { create(:user, role: 'registered') }
+    let!(:landlord_credentials) { landlord.create_new_auth_token }
+    let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
+    let!(:listing) { create(:listing, landlord: landlord) }
     before do
       post '/api/v1/biddings',
            params: {
@@ -90,13 +95,13 @@ RSpec.describe 'Biddings', type: :request do
                bid: 200,
                listing_id: listing.id
              }
-           }, headers: user_headers
+           }, headers: landlord_headers
     end
     it 'return a 401 status' do
       expect(response).to have_http_status 401
     end
     it 'is expected to return error message' do
-      expect(response_json['errors'].first).to eq 'You could not bid on your own listing'
+      expect(response_json['message']).to eq 'You could not bid on your own listing'
     end
   end
 end

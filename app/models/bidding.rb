@@ -5,7 +5,11 @@ class Bidding < ApplicationRecord
   before_create :check_if_user_is_landlord
 
   def check_if_user_is_landlord
-    user = 
-    binding.pry
+      listing = Listing.find(listing_id)   
+      user = User.find(user_id)
+      if user_id == listing.landlord_id
+        raise StandardError.new 'You could not bid on your own listing'
+      end
+   
   end
 end
