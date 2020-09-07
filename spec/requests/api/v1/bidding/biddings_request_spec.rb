@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Biddings', type: :request do
   let!(:user) { create(:user, role: 'registered') }
-    let!(:user_credentials) { user.create_new_auth_token }
-    let!(:user_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(user_credentials) }
+  let!(:user_credentials) { user.create_new_auth_token }
+  let!(:user_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(user_credentials) }
 
-    let!(:listing) { create(:listing) }
+  let!(:listing) { create(:listing) }
   describe 'POST /api/v1/biddings' do
     before do
       post '/api/v1/biddings',
@@ -79,6 +79,24 @@ RSpec.describe 'Biddings', type: :request do
     end
     it 'is expected to return error message' do
       expect(response_json['errors'].first).to eq 'You need to sign in or sign up before continuing.'
+    end
+  end
+
+  describe 'User can not bid on their own listing' do
+    before do
+      post '/api/v1/biddings',
+           params: {
+             bidding: {
+               bid: 200,
+               listing_id: listing.id
+             }
+           }, headers: user_headers
+    end
+    it 'return a 401 status' do
+      expect(response).to have_http_status 401
+    end
+    it 'is expected to return error message' do
+      expect(response_json['errors'].first).to eq 'You could not bid on your own listing'
     end
   end
 end
