@@ -14,7 +14,7 @@ class Api::V1::BiddingsController < ApplicationController
 
   def update 
     bidding = Bidding.find(params[:id])
-    binding.pry
+    # binding.pry
     if params[:status] === "accepted"
       bidding.update(status: :accepted)
       bidding.listing.update(renter_id: bidding.user)

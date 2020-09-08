@@ -25,9 +25,7 @@ RSpec.describe "PUT /api/v1/biddings", type: :request do
   describe "successfully accepted" do
     before do
       put "/api/v1/biddings/#{bid.id}", 
-      params: { 
-          bidding: { status: "accepted" } 
-      },
+      params: { status: "accepted" },
       headers: landlord_headers 
     end
 
