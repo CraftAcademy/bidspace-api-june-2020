@@ -2,12 +2,10 @@ RSpec.describe "GET '/api/v1/account/listings" do
   let!(:landlord) { create(:user)}
   let!(:subscriber) { create(:user)}
 
-  let!(:listing_1) { create(:listing, lead: 'The first lead', scene: 'indoor', landlord_id: landlord.id) }
-  let!(:listing_2) { create(:listing, lead: 'The second lead', scene: 'indoor', landlord_id: subscriber.id) }
-  let!(:listing_3) { create(:listing, lead: 'The third lead', scene: 'indoor', landlord_id: subscriber.id) }
-  let!(:listing_4) { create(:listing, lead: 'The fourth lead', scene: 'outdoor', landlord_id: landlord.id) }
+  let!(:landlord_listings) { 2.times { create(:listing, lead: "The first lead", scene: "outdoor", landlord_id: landlord.id) } }
+  let!(:other_listings) { 2.times { create(:listing, landlord_id: subscriber.id) } }
 
-  describe 'landlord successfully get published listings' do
+  describe 'landlord successfully get their published listings' do
     let(:landlord_credentials) { landlord.create_new_auth_token }
     let(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
@@ -28,7 +26,7 @@ RSpec.describe "GET '/api/v1/account/listings" do
       expect(response_json["listings"].first["lead"]).to eq 'The first lead'
     end
 
-    it 'should return landlord listings with lead' do
+    it 'should return landlord listings with scene' do
       expect(response_json["listings"].last["scene"]).to eq 'outdoor'
     end
   end

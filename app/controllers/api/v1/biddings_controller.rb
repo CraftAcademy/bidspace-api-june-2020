@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class Api::V1::BiddingsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   def create
