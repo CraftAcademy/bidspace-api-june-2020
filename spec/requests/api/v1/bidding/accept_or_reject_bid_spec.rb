@@ -1,4 +1,6 @@
-RSpec.describe "PUT /account/listings", type: :request do
+require 'rails_helper'
+
+RSpec.describe "PUT /api/v1/biddings", type: :request do
   let!(:landlord) { create(:user)}
   let(:landlord_credentials) { landlord.create_new_auth_token }
   let(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
@@ -17,13 +19,14 @@ RSpec.describe "PUT /account/listings", type: :request do
       landlord_id: landlord.id
     )
   end
-  let!(:bids) { 5.times { create(:bidding, listing_id: listing.id, user_id: subscriber.id)}}
+
+  let!(:bid) { create(:bidding, listing_id: listing.id, user_id: subscriber.id)}
 
   describe "successfully accepted" do
     before do
-      put "/api/v1/account/listings/#{listing.id}", 
+      put "/api/v1/biddings/#{bid.id}", 
       params: { 
-          bidding: { accepted: true } 
+          bidding: { status: "accepted" } 
       },
       headers: landlord_headers 
     end
@@ -39,10 +42,8 @@ RSpec.describe "PUT /account/listings", type: :request do
 
   describe "successfully rejected" do
     before do
-      put "/api/v1/account/listings/#{listing.id}", 
-      params: { 
-          bidding: { accepted: false } 
-      },
+      put "/api/v1/biddings/#{bid.id}", 
+      params: { status: "rejected" },
       headers: landlord_headers 
     end
 

@@ -12,6 +12,19 @@ class Api::V1::BiddingsController < ApplicationController
     render json: { message: e }, status: 401
   end
 
+  def update 
+    bidding = Bidding.find(params[:id])
+    binding.pry
+    if params[:status] === "accepted"
+      bidding.update(status: :accepted)
+      bidding.listing.update(renter_id: bidding.user)
+      render json: { message: "You have accepted this bid!"}
+    else
+      render json: { message: "Something went wrong"}
+    end
+  end
+
+
   private
 
   def bidding_params

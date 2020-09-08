@@ -3,12 +3,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do 
-      resources  :listings, only: [:index, :show, :create], constraints: {format: 'json'}
+      resources :listings, only: [:index, :show, :create], constraints: {format: 'json'}
       resources :subscriptions, only: [:create], constraints: {format: 'json'}
-      resources :biddings, only: [:create]
+      resources :biddings, only: [:create, :update], constraints: {format: 'json'}
 
       namespace :account do
-        resources :listings, only: [:index, :show, :update], constraints: {format: 'json'}
+        resources :listings, only: [:index, :show], constraints: {format: 'json'}
       end
     end
   end  
