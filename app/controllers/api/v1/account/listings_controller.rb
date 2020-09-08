@@ -11,7 +11,6 @@ def show
 
     render json: listing, serializer: ListingWithBidsShowSerializer
   rescue StandardError => e
-    binding.pry
     render json: { message: 'Unfortunately the listing could not be found' }, status: 422
   end
   

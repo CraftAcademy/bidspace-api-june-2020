@@ -29,7 +29,6 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'shows listing address' do
-      binding.pry
       expect(response_json['listing']['address']).to eq 'Vasagatan 1, 40530 Göteborg'
     end
 
@@ -42,11 +41,11 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'shows bid received' do
-      expect(response_json["biddings"].count).to eq 5
+      expect(response_json["listing"]["biddings"].count).to eq 5
     end
 
     it 'shows amount bidded' do
-      expect(response_json["biddings"]["bid"]).to eq 500
+      expect(response_json["listing"]["biddings"].first["bid"]).to eq 500
     end
   end
 
