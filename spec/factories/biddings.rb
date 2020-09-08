@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :bidding do
-    bid { 1.5 }
+    bid { 500 }
     association :listing, factory: :listing
   end
 end
