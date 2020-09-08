@@ -21,7 +21,7 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     let(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
     before do
-      get "/api/v1/account/listings/#{listing.id}"
+      get "/api/v1/account/listings/#{listing.id}", headers: landlord_headers
     end
 
     it 'respond with 200 status' do
@@ -29,6 +29,7 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'shows listing address' do
+      binding.pry
       expect(response_json['listing']['address']).to eq 'Vasagatan 1, 40530 Göteborg'
     end
 
