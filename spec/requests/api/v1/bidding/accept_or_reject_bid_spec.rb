@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "PUT /api/v1/biddings", type: :request do
   let!(:landlord) { create(:user)}
-  let(:landlord_credentials) { landlord.create_new_auth_token }
-  let(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
+  let!(:landlord_credentials) { landlord.create_new_auth_token }
+  let!(:landlord_headers) { { HTTP_ACCEPT: 'application/json' }.merge!(landlord_credentials) }
 
   let!(:subscriber) { create(:user)}
 

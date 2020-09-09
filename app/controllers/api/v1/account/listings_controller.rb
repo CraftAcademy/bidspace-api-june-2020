@@ -1,5 +1,6 @@
 class Api::V1::Account::ListingsController < ApplicationController
   before_action :authenticate_user!
+  before_action :
   
   def index
     listings = current_user.listings

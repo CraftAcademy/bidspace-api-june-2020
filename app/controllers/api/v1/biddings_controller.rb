@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Api::V1::BiddingsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update]
+
   def create
     bidding = current_user.biddings.create(bidding_params)
     if bidding.persisted?
@@ -17,7 +18,6 @@ class Api::V1::BiddingsController < ApplicationController
     if params[:status] === "accepted"
       bidding.update(status: "accepted")
       bidding.listing.update(tenant_id: bidding.user.id)
-      binding.pry
       render json: { message: "You have accepted this bid!"}
     else
       render json: { message: "Something went wrong"}
