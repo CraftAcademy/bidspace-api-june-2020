@@ -36,8 +36,8 @@ class Api::V1::BiddingsController < ApplicationController
   end
 
   def check_if_property_is_rented
-    if params[:listing_id]
-      listing = Listing.find(params[:listing_id])
+    if params[:bidding]
+      listing = Listing.find(params[:bidding][:listing_id])
     else
       listing = Bidding.find(params[:id]).listing
     end
