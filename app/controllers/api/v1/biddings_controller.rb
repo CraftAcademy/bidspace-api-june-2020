@@ -19,8 +19,12 @@ class Api::V1::BiddingsController < ApplicationController
       bidding.update(status: "accepted")
       bidding.listing.update(tenant_id: bidding.user.id)
       render json: { message: "You have accepted this bid!"}
+    elsif
+      params[:status] === "rejected"
+      bidding.update(status: "rejected")
+      render json: { message: "You have rejected this bid!"}
     else
-      render json: { message: "Something went wrong"}
+      render json: { message: "Something went wrong!"}
     end
   end
 
