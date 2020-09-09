@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Api::V1::BiddingsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update]
+  before_action :check_if_property_is_rented
 
   def create
     bidding = current_user.biddings.create(bidding_params)
@@ -32,5 +33,18 @@ class Api::V1::BiddingsController < ApplicationController
 
   def bidding_params
     params.require(:bidding).permit(:bid, :listing_id)
+  end
+
+  def check_if_property_is_rented
+    if params[:listing_id]
+      listing = Listing.find(params[:listing_id])
+    else
+      listing = Bidding.find(params[:id]).listing
+    end
+
+    if listing.tenant_id != nil
+      render json: { message: "This property is already rented." }, status: 422
+      return
+    end
   end
 end

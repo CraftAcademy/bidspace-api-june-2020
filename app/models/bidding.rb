@@ -3,7 +3,6 @@ class Bidding < ApplicationRecord
   belongs_to :listing
   belongs_to :user
   before_create :check_if_user_is_landlord
-  before_update :check_if_property_is_rented
   enum status: [:pending, :accepted, :rejected]
 
   def check_if_user_is_landlord
@@ -12,12 +11,5 @@ class Bidding < ApplicationRecord
     if user_id == listing.landlord_id
       raise StandardError.new 'You could not bid on your own listing'
     end 
-  end
-
-  def check_if_property_is_rented
-    listing = Listing.find(listing_id)
-    if listing.tenant_id != nil
-      raise StandardError.new "This property is already rented."
-    end
   end
 end

@@ -7,6 +7,7 @@ FactoryBot.define do
     price { 200 }
     address {'Lövåsvägen 21 16733 Bromma'}
     association :landlord, factory: :user
+    tenant_id { nil }
     trait :with_images do
       after :create do |listing|
         file_path = Rails.root.join('spec', 'support', 'assets', 'test.jpg')
