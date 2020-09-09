@@ -4,7 +4,7 @@ class Api::V1::ListingsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def index
-    listings = Listing.all
+    listings = Listing.where(tenant_id: nil)
     render json: listings, each_serializer: ListingIndexSerializer
   end
 

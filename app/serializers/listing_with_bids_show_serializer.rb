@@ -4,6 +4,8 @@ class ListingWithBidsShowSerializer < ActiveModel::Serializer
   attribute :images
   has_many :biddings, serializer: BiddingsSerializer
 
+  #should not send of bids if listing already has tenant
+
   def images
     images_to_return = []
     object.images.each do |image|
