@@ -53,4 +53,23 @@ RSpec.describe "PUT /api/v1/biddings", type: :request do
       expect(response_json['message']).to eq "You have rejected this bid!"
     end
   end
+
+  describe "cannot accept bid for listing that already has tenant" do
+    let(:tenant) { create(:user)}
+    let(:listing_with_tenant) { create(:listing, tenant_id: tenant.id)}
+    let!(:bid) { create(:bidding, listing_id: listing_with_tenant.id, user_id: tenant.id)}
+    before do
+      put "/api/v1/biddings/#{bid.id}", 
+      params: { status: "accepted" },
+      headers: landlord_headers 
+    end
+
+    it "should return a 422 status" do
+      expect(response).to have_http_status 422
+    end
+
+    it "should return message" do
+      expect(response_json['message']).to eq "This property is already rented."
+    end
+  end
 end
