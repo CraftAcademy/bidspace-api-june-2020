@@ -3,6 +3,7 @@ class Bidding < ApplicationRecord
   belongs_to :listing
   belongs_to :user
   before_create :check_if_user_is_landlord
+  enum status: [:pending, :accepted, :rejected]
 
   def check_if_user_is_landlord
       listing = Listing.find(listing_id)   

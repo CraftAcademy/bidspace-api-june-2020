@@ -8,6 +8,7 @@ class Listing < ApplicationRecord
   geocoded_by :address
   
   belongs_to :landlord, class_name: "User"
+  belongs_to :tenant, class_name: "User", optional: true
 
   before_save :geocode
   before_create :check_if_user_is_subscriber
