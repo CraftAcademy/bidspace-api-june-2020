@@ -82,7 +82,6 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'respond with 200 status' do
-      binding.pry
       expect(response).to have_http_status 200
     end
 
