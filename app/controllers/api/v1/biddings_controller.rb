@@ -18,12 +18,7 @@ class Api::V1::BiddingsController < ApplicationController
     bidding = Bidding.find(params[:id])
     if params[:status] === "accepted"
       bidding.update(status: "accepted")
-      biddings = Listing.find_by_id(bidding.listing_id).biddings
-      filter_biddings = biddings.select {|bid|bid.id != bidding.id}
-
-      filter_biddings.each do |bid|
-        bid.update(status: "rejected")
-      end
+      reject_all_other_bids(bidding)
 
       bidding.listing.update(tenant_id: bidding.user.id)
       render json: { message: "You have accepted a bid from #{bidding.user.email}"}
@@ -37,6 +32,15 @@ class Api::V1::BiddingsController < ApplicationController
   end
 
   private
+
+  def reject_all_other_bids(bidding)
+    biddings = Listing.find_by_id(bidding.listing_id).biddings
+    filter_biddings = biddings.select {|bid|bid.id != bidding.id}
+
+    filter_biddings.each do |bid|
+      bid.update(status: "rejected")
+    end
+  end
 
   def bidding_params
     params.require(:bidding).permit(:bid, :listing_id)
