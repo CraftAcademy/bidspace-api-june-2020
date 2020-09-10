@@ -13,4 +13,14 @@ class Api::V1::Account::ListingsController < ApplicationController
   rescue StandardError => e
     render json: { message: 'Unfortunately the listing could not be found' }, status: 422
   end
+
+  def update
+    listing = current_user.listings.find(params[:id])
+    if listing.tenant_id
+      listing.update(tenant_id: nil)
+      render json: {message: "The listing is now available again to the public"}
+    else
+      render json: {message: "The listing is already available."}, status: 422
+    end
+  end
 end

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resources :biddings, only: [:create, :update], constraints: {format: 'json'}
 
       namespace :account do
-        resources :listings, only: [:index, :show], constraints: {format: 'json'}
+        resources :listings, only: [:index, :show, :update], constraints: {format: 'json'}
         resources :biddings, only: [:index], constraints: {format: 'json'}
       end
     end
