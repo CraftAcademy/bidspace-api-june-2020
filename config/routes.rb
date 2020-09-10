@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
       namespace :account do
         resources :listings, only: [:index, :show], constraints: {format: 'json'}
+        resources :biddings, only: [:index], constraints: {format: 'json'}
       end
     end
   end  
