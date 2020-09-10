@@ -8,7 +8,8 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
       :with_images,
       category: 'Parking Spot',
       lead: 'Big Space for big car',
-      scene: 'outdoor', address: 'Vasagatan 1, 40530 Göteborg',
+      scene: 'outdoor',
+      address: 'Vasagatan 1, 40530 Göteborg',
       description: 'Close to a kebab store',
       price: 100,
       landlord_id: landlord.id
@@ -69,7 +70,8 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
         :with_images,
         category: 'Parking Spot',
         lead: 'Big Space for big car',
-        scene: 'outdoor', address: 'Vasagatan 1, 40530 Göteborg',
+        scene: 'outdoor',
+        address: 'Vasagatan 1, 40530 Göteborg',
         description: 'Close to a kebab store',
         price: 100,
         landlord_id: landlord.id,
@@ -78,7 +80,8 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     before do
-      get "/api/v1/account/listings/#{listing.id}", headers: landlord_headers
+      get "/api/v1/account/listings/#{listing.id}",
+       headers: landlord_headers
     end
 
     it 'respond with 200 status' do
