@@ -25,7 +25,6 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'respond with 200 status' do
-      binding.pry
       expect(response).to have_http_status 200
     end
 
@@ -45,8 +44,16 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
       expect(response_json["listing"]["biddings"].count).to eq 5
     end
 
+    it 'shows who placed the bid' do
+      expect(response_json["listing"]["biddings"].first["user"]["email"]).to eq subscriber.email
+    end
+
     it 'shows amount bidded' do
       expect(response_json["listing"]["biddings"].first["bid"]).to eq 500
+    end
+
+    it 'should not have a tenant' do
+      expect(response_json["listing"]["tenant"]).to eq nil
     end
   end
 
@@ -75,6 +82,7 @@ RSpec.describe 'GET /api/v1/account/listings', type: :request do
     end
 
     it 'respond with 200 status' do
+      binding.pry
       expect(response).to have_http_status 200
     end
 

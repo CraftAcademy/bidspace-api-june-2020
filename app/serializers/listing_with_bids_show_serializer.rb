@@ -6,7 +6,11 @@ class ListingWithBidsShowSerializer < ActiveModel::Serializer
   def tenant
     if object.tenant_id
       tenant = User.find(object.tenant_id)
-      return tenant
+      ActiveModelSerializers::SerializableResource.new(
+        tenant, 
+        serializer: UserSerializer,
+        adapter: :attributes
+      )
     else
       return nil
     end
