@@ -13,4 +13,8 @@ class Api::V1::Account::ListingsController < ApplicationController
   rescue StandardError => e
     render json: { message: 'Unfortunately the listing could not be found' }, status: 422
   end
+
+  def update
+    binding.pry
+  end
 end
