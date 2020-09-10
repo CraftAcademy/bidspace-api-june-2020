@@ -1,10 +1,28 @@
 class ListingWithBidsShowSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :category, :lead, :scene, :description, :address, :price
+  attributes :id, :category, :lead, :scene, :description, :address, :price, :biddings, :tenant
   attribute :images
-  has_many :biddings, serializer: BiddingsSerializer
 
-  #should not send of bids if listing already has tenant
+  def tenant
+    if object.tenant_id
+      tenant = User.find(object.tenant_id)
+      return tenant
+    else
+      return nil
+    end
+  end
+
+  def biddings
+    if object.tenant_id == nil
+      ActiveModelSerializers::SerializableResource.new(
+        object.biddings, 
+        each_serializer: BiddingsSerializer,
+        adapter: :attributes
+      )
+    else 
+      return nil
+    end
+  end
 
   def images
     images_to_return = []
