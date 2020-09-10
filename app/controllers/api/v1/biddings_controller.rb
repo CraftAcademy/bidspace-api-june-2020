@@ -18,12 +18,19 @@ class Api::V1::BiddingsController < ApplicationController
     bidding = Bidding.find(params[:id])
     if params[:status] === "accepted"
       bidding.update(status: "accepted")
+      biddings = Listing.find_by_id(bidding.listing_id).biddings
+      filter_biddings = biddings.select {|bid|bid.id != bidding.id}
+
+      filter_biddings.each do |bid|
+        bid.update(status: "rejected")
+      end
+
       bidding.listing.update(tenant_id: bidding.user.id)
-      render json: { message: "You have accepted this bid!"}
+      render json: { message: "You have accepted a bid from #{bidding.user.email}"}
     elsif
       params[:status] === "rejected"
       bidding.update(status: "rejected")
-      render json: { message: "You have rejected this bid!"}
+      render json: { message: "You have rejected a bid from #{bidding.user.email}"}
     else
       render json: { message: "Something went wrong!"}
     end
