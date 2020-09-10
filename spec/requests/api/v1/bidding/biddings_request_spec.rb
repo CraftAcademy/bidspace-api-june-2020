@@ -104,4 +104,27 @@ RSpec.describe 'Biddings', type: :request do
       expect(response_json['message']).to eq 'You could not bid on your own listing'
     end
   end
+
+  describe "cannot place bid for listing that already has tenant" do
+    let(:tenant) { create(:user)}
+    let(:listing_with_tenant) { create(:listing, tenant_id: tenant.id)}
+    let!(:bid) { create(:bidding, listing_id: listing_with_tenant.id, user_id: tenant.id)}
+    before do
+      post "/api/v1/biddings", 
+      params: {
+        bidding: {
+        bid: 200,
+        listing_id: listing_with_tenant.id
+      }
+    }, headers: user_headers
+    end
+
+    it "should return a 422 status" do
+      expect(response).to have_http_status 422
+    end
+
+    it "should return message" do
+      expect(response_json['message']).to eq "This property is already rented."
+    end
+  end
 end

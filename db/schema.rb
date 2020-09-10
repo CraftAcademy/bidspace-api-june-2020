@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_132852) do
+ActiveRecord::Schema.define(version: 2020_09_09_074242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_132852) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "listing_id", null: false
     t.bigint "user_id", null: false
+    t.integer "status", default: 0
     t.index ["listing_id"], name: "index_biddings_on_listing_id"
     t.index ["user_id"], name: "index_biddings_on_user_id"
   end
@@ -58,7 +59,9 @@ ActiveRecord::Schema.define(version: 2020_09_04_132852) do
     t.float "longitude"
     t.float "latitude"
     t.bigint "landlord_id"
+    t.bigint "tenant_id"
     t.index ["landlord_id"], name: "index_listings_on_landlord_id"
+    t.index ["tenant_id"], name: "index_listings_on_tenant_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -93,4 +96,5 @@ ActiveRecord::Schema.define(version: 2020_09_04_132852) do
   add_foreign_key "biddings", "listings"
   add_foreign_key "biddings", "users"
   add_foreign_key "listings", "users", column: "landlord_id"
+  add_foreign_key "listings", "users", column: "tenant_id"
 end

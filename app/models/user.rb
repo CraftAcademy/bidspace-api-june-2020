@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :listings, foreign_key: "landlord_id", class_name: "Listing"
+  has_many :rented_properties, foreign_key: "tenant_id", class_name: "Listing"
 
   has_many :biddings
 

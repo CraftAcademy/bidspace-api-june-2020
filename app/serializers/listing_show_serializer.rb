@@ -15,4 +15,3 @@ class ListingShowSerializer < ActiveModel::Serializer
     images_to_return
   end
 end
-
