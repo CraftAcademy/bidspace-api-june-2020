@@ -6,7 +6,7 @@ RSpec.describe "GET '/api/v1/account/biddings" do
   let!(:listings) { 2.times { create(:listing, landlord_id: landlord.id) }} 
 
   let!(:first_bid) { create(:bidding, listing_id: Listing.first.id, user_id: subscriber.id) }
-  let!(:second_bid) { create(:bidding, listing_id: Listing.last.id, user_id: subscriber.id) }
+  let!(:second_bid) { create(:bidding, listing_id: Listing.last.id, user_id: subscriber.id, status: "accepted") }
   let!(:other_bid) { create(:bidding, listing_id: Listing.first.id, user_id: other_user.id) }
 
   describe 'potential tenant successfully gets listings which they have bid on' do
@@ -32,6 +32,10 @@ RSpec.describe "GET '/api/v1/account/biddings" do
 
     it 'should return bid with an amount' do
       expect(response_json["biddings"].first["bid"]).to eq 500
+    end
+
+    it 'should return bid with the status' do
+      expect(response_json["biddings"].last["status"]).to eq "accepted"
     end
   end
 
