@@ -26,4 +26,21 @@ RSpec.describe 'PUT /api/v1/account/listings/:id', type: :request do
       expect(listing.tenant_id).to eq nil
     end
   end
+
+  describe 'unsuccessfully with available listing' do
+    let!(:available_listing) { create(:listing, landlord_id: landlord.id) }
+
+    before do
+      put "/api/v1/account/listings/#{available_listing.id}",
+      headers: landlord_headers
+    end
+    
+    it 'is expected to return 422 response status' do
+      expect(response).to have_http_status 422
+    end
+
+    it 'is expected to return error message' do
+      expect(response_json['message']).to eq 'The listing is already available.'
+    end
+  end
 end

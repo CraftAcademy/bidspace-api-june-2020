@@ -15,6 +15,12 @@ class Api::V1::Account::ListingsController < ApplicationController
   end
 
   def update
-    binding.pry
+    listing = current_user.listings.find(params[:id])
+    if listing.tenant_id
+      listing.update(tenant_id: nil)
+      render json: {message: "The listing is now available again to the public"}
+    else
+      render json: {message: "The listing is already available."}, status: 422
+    end
   end
 end
