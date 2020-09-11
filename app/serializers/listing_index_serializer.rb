@@ -1,6 +1,6 @@
 class ListingIndexSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :category, :lead, :scene
+  attributes :id, :category, :lead, :scene, :latitude, :longitude
   attribute :image
 
   def image
