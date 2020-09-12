@@ -15,6 +15,7 @@ class Api::V1::BiddingsController < ApplicationController
   end
 
   def update 
+  
     bidding = Bidding.find(params[:id])
     if params[:status] === "accepted"
       bidding.update(status: "accepted")
@@ -47,10 +48,11 @@ class Api::V1::BiddingsController < ApplicationController
   end
 
   def check_if_property_is_rented
-    if params[:bidding]
-      listing = Listing.find(params[:bidding][:listing_id])
-    else
+    
+    if params[:status]
       listing = Bidding.find(params[:id]).listing
+    else
+      listing = Listing.find(params[:bidding][:listing_id])
     end
 
     if listing.tenant_id != nil
